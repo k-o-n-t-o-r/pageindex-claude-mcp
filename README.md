@@ -3,12 +3,9 @@
 
 MCP server for [PageIndex](https://github.com/VectifyAI/PageIndex) with a Claude LLM backend.
 
-
-Allows agents to index PDFs and Markdown files into hierarchical tree structures, then search them using reasoning-based retrieval. Alternative to RAG-based approaches.
-
 <br>
 
-> [!NOTE]                                                                         
+> [!NOTE]                                                                     
 > PageIndex normally requires OpenAI. This server patches it at runtime to use Claude instead (via the Claude Agent SDK). The upstream PageIndex library is vendored as a git submodule under `vendor/PageIndex/`.
 
 
@@ -43,28 +40,6 @@ Config for **Claude Desktop**:
 
 See `.env.example` for all available settings.
 
-## Tools
-
-| Tool | Description |
-|------|-------------|
-| `add_document` | Index a PDF or Markdown file |
-| `add_documents` | Batch-index multiple files concurrently |
-| `list_documents` | List all indexed documents |
-| `search_documents` | Reasoning-based search across the store |
-| `get_document_tree` | Full hierarchical structure of a document |
-| `get_page_text` | Extract text from specific PDF pages |
-| `remove_document` | Remove a document and its index |
-
-## Workflow
-
-```python
-add_document("report.pdf")
-list_documents()
-search_documents("quarterly revenue")
-get_document_tree("report.pdf")
-get_page_text("report.pdf", 12, 15)
-```
-
 ## Configuration
 
 Environment variables (also listed in `.env.example`):
@@ -78,6 +53,18 @@ Environment variables (also listed in `.env.example`):
 | `PAGEINDEX_LOG_FILE` | `~/.pageindex-store/mcp_server.log` | Log file path |
 | `PAGEINDEX_CONCURRENCY` | `4` | Max concurrent indexing jobs |
 | `PAGEINDEX_IMPORT_DIR` | - | If set, restrict `add_document`/`add_documents` to paths under this directory (after resolving symlinks). Recommended when running over SSE. |
+
+## Tools
+
+| Tool | Description |
+|------|-------------|
+| `add_document` | Index a PDF or Markdown file |
+| `add_documents` | Batch-index multiple files concurrently |
+| `list_documents` | List all indexed documents |
+| `search_documents` | Reasoning-based search across the store |
+| `get_document_tree` | Full hierarchical structure of a document |
+| `get_page_text` | Extract text from specific PDF pages |
+| `remove_document` | Remove a document and its index |
 
 ## Docker
 
