@@ -1,18 +1,20 @@
 # PageIndex Claude MCP
 
+
 MCP server for [PageIndex](https://github.com/VectifyAI/PageIndex) with a Claude LLM backend.
 
-Allows agents to index PDFs and Markdown files into hierarchical tree structures, then search them using reasoning-based retrieval.
 
-PageIndex normally requires OpenAI. This server patches it at runtime to use Claude instead (via the Claude Agent SDK).
-The upstream PageIndex library is vendored as a git submodule under `vendor/PageIndex/`.
+Allows agents to index PDFs and Markdown files into hierarchical tree structures, then search them using reasoning-based retrieval. Alternative to RAG-based approaches.
+
+<br>
 
 > [!NOTE]                                                                         
-> I created this for testing purposes, it's not necessarily production ready.
+> PageIndex normally requires OpenAI. This server patches it at runtime to use Claude instead (via the Claude Agent SDK). The upstream PageIndex library is vendored as a git submodule under `vendor/PageIndex/`.
+
 
 ## Quick start
 
-Requirements: Python 3.11+, [uv](https://docs.astral.sh/uv/), and a `CLAUDE_CODE_OAUTH_TOKEN` (see `.env.example`). The Claude CLI binary is bundled with the `claude-agent-sdk` dependency; no separate install needed.
+**Requirements**: Python 3.11+, [uv](https://docs.astral.sh/uv/), and a `CLAUDE_CODE_OAUTH_TOKEN` (see `.env.example`).
 
 ```bash
 git clone --recurse-submodules https://github.com/k-o-n-t-o-r/pageindex-claude-mcp.git
@@ -20,13 +22,13 @@ cd pageindex-claude-mcp
 uv sync
 ```
 
-Add to Claude Code:
+Add to **Claude Code**:
 
 ```bash
 claude mcp add pageindex-claude-mcp -- uv --directory /absolute/path/to/pageindex-claude-mcp run python mcp_server.py
 ```
 
-Config for Claude Desktop:
+Config for **Claude Desktop**:
 
 ```json
 {
@@ -55,7 +57,7 @@ See `.env.example` for all available settings.
 
 ## Workflow
 
-```
+```python
 add_document("report.pdf")
 list_documents()
 search_documents("quarterly revenue")
@@ -71,11 +73,11 @@ Environment variables (also listed in `.env.example`):
 |----------|---------|---------|
 | `PAGEINDEX_STORE_PATH` | `~/.pageindex-store` | Document store location |
 | `CLAUDE_MODEL` | `sonnet` | Model (sonnet/opus/haiku or full ID) |
-| `CLAUDE_EFFORT` | -- | Reasoning effort: `low`, `medium`, `high`, or `max`. Unset uses the SDK default. |
-| `CLAUDE_CODE_OAUTH_TOKEN` | -- | OAuth token for Claude Agent SDK |
+| `CLAUDE_EFFORT` | - | Reasoning effort: `low`, `medium`, `high`, or `max`. Unset uses the SDK default. |
+| `CLAUDE_CODE_OAUTH_TOKEN` | - | OAuth token for Claude Agent SDK |
 | `PAGEINDEX_LOG_FILE` | `~/.pageindex-store/mcp_server.log` | Log file path |
 | `PAGEINDEX_CONCURRENCY` | `4` | Max concurrent indexing jobs |
-| `PAGEINDEX_IMPORT_DIR` | -- | If set, restrict `add_document`/`add_documents` to paths under this directory (after resolving symlinks). Recommended when running over SSE. |
+| `PAGEINDEX_IMPORT_DIR` | - | If set, restrict `add_document`/`add_documents` to paths under this directory (after resolving symlinks). Recommended when running over SSE. |
 
 ## Docker
 
@@ -116,16 +118,6 @@ Install dev dependencies, then run:
 uv sync --group dev
 uv run python -m pytest tests/test_claude_backend.py   # unit tests (mocked LLM, fast)
 uv run python tests/test_integration.py                # integration tests (real LLM, spends quota)
-```
-
-## Project structure
-
-```
-mcp_server.py            MCP tools and document store
-claude_backend.py        Claude LLM backend, PageIndex patching
-tests/                   Unit tests (mocked) and integration tests (real LLM)
-vendor/PageIndex/        VectifyAI/PageIndex (git submodule)
-Dockerfile               Container image (SSE transport)
 ```
 
 ## License
