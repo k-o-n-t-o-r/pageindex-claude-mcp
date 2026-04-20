@@ -1,0 +1,32 @@
+[project]
+name = "pageindex-claude-mcp"
+version = "0.1.0"
+description = "MCP server that wraps PageIndex for document indexing and retrieval, using Claude as the LLM backend."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.11"
+authors = [{ name = "Raphael Martin", email = "raphael@gonku.de" }]
+dependencies = [
+    "claude-agent-sdk>=0.1.60",
+    "litellm>=1.83.8",
+    "mcp[cli]>=1.0",
+    "pymupdf>=1.24",
+    "pypdf2>=3.0",
+    "python-dotenv>=1.0",
+    "pyyaml>=6.0",
+    "tiktoken>=0.7",
+]
+
+[project.urls]
+Homepage = "https://github.com/k-o-n-t-o-r/pageindex-claude-mcp"
+Repository = "https://github.com/k-o-n-t-o-r/pageindex-claude-mcp"
+Issues = "https://github.com/k-o-n-t-o-r/pageindex-claude-mcp/issues"
+
+[dependency-groups]
+dev = ["pytest>=9.0.3", "pytest-asyncio>=1.3.0"]
+
+[tool.ruff]
+extend-exclude = ["vendor"]
+
+[tool.ruff.lint]
+ignore = ["E402", "F401"]
